@@ -17,8 +17,10 @@ for min_samples_leaf in min_samples_leaf_values:
     cv = model_selection.cross_validate(dtc, mol_data.data, mol_data.target, scoring=["roc_auc"], cv=10, return_train_score=True)
     train_roc_auc_scores.append(cv["train_roc_auc"].mean())
     test_roc_auc_scores.append(cv["test_roc_auc"].mean())
-    print(cv)
 
+
+
+# GridSearchCV, best parameter print. 
 parameters2 = [{"min_samples_leaf": [1, 5, 10, 20, 50,70,100,200,300,400]}]
 model = tree.DecisionTreeClassifier()
 tuned_dtc = model_selection.GridSearchCV(model, parameters2, scoring="roc_auc", cv=10)
@@ -26,15 +28,15 @@ cv2 = model_selection.cross_validate(tuned_dtc, mol_data.data, mol_data.target, 
 GC_mean = cv2["test_score"].mean()
 tuned_dtc.fit(mol_data.data, mol_data.target)
 best_case = tuned_dtc.best_params_
-best_value = best_case['min_samples_leaf']
-print("tuned dtc : ",cv2)
+print(best_case)
+print("GridSearchCV mean:",GC_mean)
+
+#
+
 
 plt.plot(min_samples_leaf_values, train_roc_auc_scores, label="Training ROC AUC")
 plt.plot(min_samples_leaf_values, test_roc_auc_scores, label="Test ROC AUC")
 plt.xlabel("min_samples_leaf")
 plt.ylabel("ROC AUC")
-
 plt.legend()
 plt.show()
-plt2.plot(best_value,GC_mean,label="bestcase")
-plt2.show()

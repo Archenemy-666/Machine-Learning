@@ -5,7 +5,7 @@ import matplotlib as mpl
 import matplotlib.pyplot as plt
 from sklearn import metrics
 from sklearn import model_selection
-mol_data = fetch_openml(name = 'pc1')
+mol_data = fetch_openml(name = 'pc3')
 
 min_samples_leaf_values = [1, 5, 10, 20, 50,70,100,200,300,400]
 
@@ -30,8 +30,6 @@ tuned_dtc.fit(mol_data.data, mol_data.target)
 best_case = tuned_dtc.best_params_
 print(best_case)
 print("GridSearchCV mean:",GC_mean)
-
-#
 
 
 plt.plot(min_samples_leaf_values, train_roc_auc_scores, label="Training ROC AUC")

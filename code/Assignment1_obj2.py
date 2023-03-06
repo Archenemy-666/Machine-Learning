@@ -42,7 +42,7 @@ def GridSearch(parameters2,dia):
 
 
 def main():
-    dia = datasets.fetch_openml(name = 'pc2')
+    dia = datasets.fetch_openml(name = 'pc4')
 
     parameters2 = [{"min_samples_leaf":[1,2,5,10,20,60,90,140,200,250]}] 
     
@@ -56,9 +56,11 @@ def main():
 
     plt.plot(parameters,train_scores,label = "train_scores")
     plt.plot(parameters,test2_scores,label = "test2_scores") 
-    plt.axvline(x=optmial_leaf,color='black',linestyle='--',label = 'optimal_leaf')
-    plt.fill_between(parameters, test2_scores, train_scores, where=test_scores <= train_scores, interpolate=True,color ='red', alpha=0.2, label='min_samples_leaf') 
-    plt.fill_between(parameters, test2_scores, train_scores, where=test_scores > train_scores, interpolate=True, color='green', alpha=0.2,label='ROC_AUC')
+    plt.axvline(x=optmial_leaf,color='black',linestyle='--',label ='optimal_leaf')
+    plt.fill_between(parameters, test2_scores, train_scores, where=test_scores <= train_scores, interpolate=True,color ='red', alpha=0.2,label = 'overfit') 
+    plt.fill_between(parameters, test2_scores, train_scores, where=test_scores > train_scores, interpolate=True, color='green', alpha=0.2,label = 'underfit')
+    plt.xlabel("min_sample_leaf")
+    plt.ylabel("ROC_AUC")
     plt.legend()
     plt.show()
 
